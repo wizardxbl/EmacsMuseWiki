@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Encryption</title>
+    <meta name="generator" content="muse.el">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8">
+    <style type="text/css">
+body {
+  background: white; color: black;
+  margin-left: 3%; margin-right: 7%;
+}
+
+p { margin-top: 1% }
+p.verse { margin-left: 3% }
+
+.example { margin-left: 3% }
+
+h2 {
+  margin-top: 25px;
+  margin-bottom: 0px;
+}
+h3 { margin-bottom: 0px; }
+    </style>
+  </head>
+  <body>
+    <h1>Encryption</h1>
+    <!-- Page published by Emacs Muse begins here -->
+<p>加密芯片：DS28E10
+开发板：友坚的S5PV210
+uboot:utv210-uboot
+kernel:utv210-kernel
+android:utv210-android2.1
+toolchain:arm-2009q3</p>
+
+<h2>DS28E10</h2>
+
+<h3>芯片简介</h3>
+
+<p class="first">MAXIM的芯片</p>
+
+<p>1-Wire SHA-1 Authenticator</p>
+
+<h4>General Description</h4>
+
+<p class="first">The DS28E10 combines secure challenge-and-response authentication functionality based on the FIPS 180-3 specified Secured Hash Algorithm (SHA-1) with 224 bits of one-time programmable user EPROM in a single chip. Once written, the memory is automatically write protected. Additionally, each device has its own guaranteed unique 64-bit ROM identification number (ROM ID) that is factory programmed into the chip. Memory writes are performed 4 bytes at a time. A secure and low-cost factory programming service is available to preprogram device data, including the SHA-1 security data components. The device communicates over the single-contact 1-Wire bus. The communication follows the standard 1-Wire proteocol with the ROM ID acting as node address in the case of a multidevice 1-Wire network.</p>
+
+<p>这里面提到的重点是1-wire总线，只有一根线的总线。</p>
+
+
+
+
+
+<h3>芯片操作</h3>
+
+
+
+<h2>设置开发环境</h2>
+
+<h3>编译u-boot</h3>
+
+<p class="first">$tar -jxvf utv210-uboot-v1.0-20100922.tar.bz2</p>
+
+<p>$cd utv210-uboot</p>
+
+<p>$make distclean</p>
+
+<p>$make smdkv210single_config</p>
+
+<p>$make</p>
+
+
+<h3>编译kernel</h3>
+
+<p class="first">$tar -jxvf utv210-kernel-20100925.tar.bz2</p>
+
+<p>$cd utv210-kernel</p>
+
+<p>$make clean</p>
+
+<p>$cp utv210.config .config</p>
+
+<p>$make</p>
+
+<p>编译最终生成的zImage在arch/arm/boot目录下</p>
+
+
+<h3>编译android2.1</h3>
+
+<p class="first">$tar xvf utv210-android2.1-v1.0-20100925.tar.bz2</p>
+
+<p>$cd utv210-android2.1</p>
+
+<p>$. ./build/envsetup.sh</p>
+
+<p>$tapas</p>
+
+<p>选择Device</p>
+
+<p>选择debug</p>
+
+<p>输入utv210</p>
+
+<p>选择eng</p>
+
+<p>$mm 开始编译源码</p>
+
+<p>$./make_utv210_yaffs2_image.sh 在当前目录下得到utv210_root.img</p>
+
+
+
+<h2>驱动</h2>
+
+<h3>控制IO口电平变化</h3>
+
+
+<h3>控制IO口按时序变化</h3>
+
+
+
+<h2>应用</h2>
+
+<h3>开始读取芯片序列号</h3>
+
+
+<h3>显示读取到的序列号</h3>
+
+
+
+
+<!-- Page published by Emacs Muse ends here -->
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/default-css.css" />
+<script type="text/javascript">
+function hide_area(sDivId) {
+    var oDiv = document.getElementById(sDivId);
+    oDiv.style.display = (oDiv.style.display=="none")?"block":"none";
+}
+</script>
+</head>
+<body>
+    <div id="header">
+      <h1 ><lisp>
+  (concat (muse-publishing-directive "title")
+          (let ((author (muse-publishing-directive "author")))
+            (if (not (string= author (user-full-name)))
+                (concat " (by " author ")"))))</lisp></h1>
+    </div>
+<hr>

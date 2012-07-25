@@ -1,0 +1,19 @@
+digraph mtd_info{
+	node [shape=record, fontsize=12, style=filled];
+	edge[color=blue];
+	rankdir=LR;
+
+	subgraph struct_mtd_info {
+		node[shape=record style=filled];
+		color=lightgray;
+		style=filled;
+		label = "struct mtd_info";
+		edge[color="#2e3436"];
+		node_mtd_info[shape=record,label="<f0>u_char type\
+			      |<f1>uint32_t flags\
+			      |<f2>uint64_t size\
+			      |<f3>uint32_t erasesize\
+			      |<f4>
+			      |f<999>"];
+	}
+}

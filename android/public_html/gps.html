@@ -1,0 +1,574 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>GPS</title>
+    <meta name="generator" content="muse.el">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8">
+    <style type="text/css">
+body {
+  background: white; color: black;
+  margin-left: 3%; margin-right: 7%;
+}
+
+p { margin-top: 1% }
+p.verse { margin-left: 3% }
+
+.example { margin-left: 3% }
+
+h2 {
+  margin-top: 25px;
+  margin-bottom: 0px;
+}
+h3 { margin-bottom: 0px; }
+    </style>
+  </head>
+  <body>
+    <h1>GPS</h1>
+    <!-- Page published by Emacs Muse begins here -->
+<p><a href="index.html">&lt;Back</a></p>
+
+
+<p>NMEA output Sentence
+<a name="table" id="table"></a>
+<table class="muse-table" border="2" cellpadding="5">
+  <tbody>
+    <tr>
+      <td>选项</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td><a href="gps.html#GGA">GGA</a></td>
+      <td>Global Position System Fix Data.Time.Position and fix related data for a GPS receiver GPS定位信息</td>
+    </tr>
+    <tr>
+      <td><a href="gps.html#GSA">GSA</a></td>
+      <td>GNSS DOP and Active Sitelites 当前活动卫星信息</td>
+    </tr>
+    <tr>
+      <td><a href="gps.html#GSV">GSV</a></td>
+      <td>GNSS Satellites in view 可见定位卫星信息</td>
+    </tr>
+    <tr>
+      <td><a href="gps.html#RMC">RMC</a></td>
+      <td>Recommended Minimum Navigation Information 推荐最小定位信息</td>
+    </tr>
+    <tr>
+      <td><a href="gps.html#VTG">VTG</a></td>
+      <td>Course and speed information relative to the ground 地面航向和速度信息</td>
+    </tr>
+  </tbody>
+</table></p>
+
+<p><a name="GGA" id="GGA"></a>
+GGA <a href="gps.html#table">top</a></p>
+
+<p>消息例子：$GPGGA,161229.487,3723.2475,N,12158.3416,W,1,07,1.0,9.0,M,17.806,M,,*18</p>
+
+<table class="muse-table" border="2" cellpadding="5">
+  <tbody>
+    <tr>
+      <td>名字</td>
+      <td>例子</td>
+      <td>单位</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>Message ID</td>
+      <td>$GPGGA</td>
+      <td></td>
+      <td>GGA协议头</td>
+    </tr>
+    <tr>
+      <td>UTC Time</td>
+      <td>161229.487</td>
+      <td></td>
+      <td>hhmmss.sss</td>
+    </tr>
+    <tr>
+      <td>Latitude 维度</td>
+      <td>3723.2475</td>
+      <td></td>
+      <td>ddmm.mmmmmm</td>
+    </tr>
+    <tr>
+      <td>N/S Indicator</td>
+      <td>N</td>
+      <td></td>
+      <td>N=north or S=south</td>
+    </tr>
+    <tr>
+      <td>Longitude 经度</td>
+      <td>12158.3416</td>
+      <td></td>
+      <td>dddmm.mmmmmm</td>
+    </tr>
+    <tr>
+      <td>E/W Indicator</td>
+      <td>W</td>
+      <td></td>
+      <td>E=east or W=west</td>
+    </tr>
+    <tr>
+      <td>Position Fix Indicator</td>
+      <td>1</td>
+      <td></td>
+      <td>0:Fixnotavailable 未定位 1:GPSfix 非差分定位 2:Differential GPS fix 差分定位</td>
+    </tr>
+    <tr>
+      <td>Satellites Used 正在使用的卫星数量</td>
+      <td>7</td>
+      <td></td>
+      <td>Range 0 to 14</td>
+    </tr>
+    <tr>
+      <td>HDOP</td>
+      <td>1</td>
+      <td></td>
+      <td>Horizontal Dilution of Precision 水平精度因子</td>
+    </tr>
+    <tr>
+      <td>MSL Altitude 海拔</td>
+      <td>9</td>
+      <td>meters</td>
+      <td>Antenna Altitude above/below mean-sea-level 天线对于平均海平面的海拔</td>
+    </tr>
+    <tr>
+      <td>Units</td>
+      <td>M</td>
+      <td>meters</td>
+      <td>Units of antenna altitude 天线海拔的单位</td>
+    </tr>
+    <tr>
+      <td>Geoidal Separation</td>
+      <td>17.806</td>
+      <td>meters</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Units</td>
+      <td>M</td>
+      <td>meters</td>
+      <td>Units of geoidal 大地水准面 separation</td>
+    </tr>
+    <tr>
+      <td>Age of Diff. Corr.</td>
+      <td></td>
+      <td></td>
+      <td>Null fields when DGPS is not used</td>
+    </tr>
+    <tr>
+      <td>Checksum</td>
+      <td>*18</td>
+      <td>second</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>&lt;CR&gt; &lt;LF&gt;</td>
+      <td></td>
+      <td></td>
+      <td>End of message termination 消息结束</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<p><a name="GSA" id="GSA"></a>
+GSA <a href="gps.html#table">top</a></p>
+
+<p>消息例子：$GPGSA,A,3,29,21,26,15,18,09,06,10,,,,,2.32,0.95,2.11*00</p>
+
+<table class="muse-table" border="2" cellpadding="5">
+  <tbody>
+    <tr>
+      <td>名字</td>
+      <td>例子</td>
+      <td>单位</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>Message ID</td>
+      <td>$GPGSA</td>
+      <td></td>
+      <td>GSA消息头</td>
+    </tr>
+    <tr>
+      <td>Mode 1</td>
+      <td>A</td>
+      <td></td>
+      <td>M:Manual-forced to operate in 2D or 3D mode  A:2D Automatic-allowed to Automatically switch 2D/3D</td>
+    </tr>
+    <tr>
+      <td>Mode 2</td>
+      <td>3</td>
+      <td></td>
+      <td>1:Fix no available. 2:2D 3：3D</td>
+    </tr>
+    <tr>
+      <td>Satellite Used</td>
+      <td>29</td>
+      <td></td>
+      <td>SV on Channel 1</td>
+    </tr>
+    <tr>
+      <td>Satellite Used</td>
+      <td>21</td>
+      <td></td>
+      <td>SV on Channel 2</td>
+    </tr>
+    <tr>
+      <td><hr></td>
+      <td>&mdash;
+</td>
+      <td>&mdash;
+</td>
+      <td>&mdash;
+</td>
+    </tr>
+    <tr>
+      <td>Satellite Used</td>
+      <td></td>
+      <td></td>
+      <td>SV on Channel 12</td>
+    </tr>
+    <tr>
+      <td>PDOP</td>
+      <td>2.32</td>
+      <td></td>
+      <td>Position Dilution of Precision 综合位置经度因子</td>
+    </tr>
+    <tr>
+      <td>HDOP</td>
+      <td>0.95</td>
+      <td></td>
+      <td>Horizontal Dilution of Precision 水平精度因子</td>
+    </tr>
+    <tr>
+      <td>VDOP</td>
+      <td>2.11</td>
+      <td></td>
+      <td>Vertical Dilution of Precision 垂直精度因子</td>
+    </tr>
+    <tr>
+      <td>Checksum</td>
+      <td>*00</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>&lt;CR&gt;&lt;LF&gt;</td>
+      <td></td>
+      <td></td>
+      <td>End of message termination</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="GSV" id="GSV"></a>
+GSV <a href="gps.html#table">top</a></p>
+
+<p>消息例子：</p>
+
+<p>$GPGSV,3,1,09,29,36,029,42,21,46,314,43,26,44,020,43,15,21,321,39,*7D</p>
+
+<p>$GPGSV,3,2,09,18,26,314,40,09,57,170,44,06,20,229,37,10,26,084,37,*77</p>
+
+<table class="muse-table" border="2" cellpadding="5">
+  <tbody>
+    <tr>
+      <td>名字</td>
+      <td>例子</td>
+      <td>单位</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>Message ID</td>
+      <td>$GPGSV</td>
+      <td></td>
+      <td>GSV protocol header</td>
+    </tr>
+    <tr>
+      <td>Number of Messages 本次GSV语句总数目</td>
+      <td>3</td>
+      <td></td>
+      <td>Range 1 to 3 (Depending on the number of satellites tracked, multiple messages of GSV data may be required).</td>
+    </tr>
+    <tr>
+      <td>Message Number1 本条语句是第几条</td>
+      <td>1</td>
+      <td></td>
+      <td>Range 1 to 3</td>
+    </tr>
+    <tr>
+      <td>Satellites in View 当前可见卫星总数</td>
+      <td>9</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Satellite ID</td>
+      <td>29</td>
+      <td></td>
+      <td>Channel 1(Range 1 to 32)</td>
+    </tr>
+    <tr>
+      <td>Elevation</td>
+      <td>36</td>
+      <td>degrees</td>
+      <td>Channel 1 (Maximum 90)</td>
+    </tr>
+    <tr>
+      <td>Azimuth</td>
+      <td>29</td>
+      <td>degrees</td>
+      <td>Channel 1 (True, Range 0 to 359)</td>
+    </tr>
+    <tr>
+      <td>SNR(C/No)</td>
+      <td>42</td>
+      <td>dBHz</td>
+      <td>Range 0 to 99</td>
+    </tr>
+    <tr>
+      <td><hr></td>
+      <td>&mdash;
+</td>
+      <td>&mdash;
+</td>
+      <td>&mdash;
+</td>
+    </tr>
+    <tr>
+      <td>Satellite ID</td>
+      <td>15</td>
+      <td></td>
+      <td>Channel 4 (Range 1 to 32)</td>
+    </tr>
+    <tr>
+      <td>Elevation</td>
+      <td>21</td>
+      <td>degrees</td>
+      <td>Channel 4 (Maximum 90)</td>
+    </tr>
+    <tr>
+      <td>Azimuth</td>
+      <td>321</td>
+      <td>degrees</td>
+      <td>Channel 4(True, Range 0 to 359)</td>
+    </tr>
+    <tr>
+      <td>SNR(C/No)</td>
+      <td>39</td>
+      <td>dBHz</td>
+      <td>Range 0 to 99,(null when not tracking)</td>
+    </tr>
+    <tr>
+      <td>Checksum</td>
+      <td>*7D</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>&lt;CR&gt;&lt;LF&gt;</td>
+      <td></td>
+      <td></td>
+      <td>End of message termination</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="RMC" id="RMC"></a>
+RMC <a href="gps.html#table">top</a></p>
+
+<p>消息例子：</p>
+
+<p>$GPRMC,064951.000,A,2307.125647,N,12016.443856,E,0.036,165.48,260406,,A,,*65</p>
+
+<table class="muse-table" border="2" cellpadding="5">
+  <tbody>
+    <tr>
+      <td>名字</td>
+      <td>例子</td>
+      <td>单位</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>Message ID</td>
+      <td>$GPRMC</td>
+      <td></td>
+      <td>RMC protocol header</td>
+    </tr>
+    <tr>
+      <td>UTC Time</td>
+      <td>64951</td>
+      <td></td>
+      <td>hhmmss.sss</td>
+    </tr>
+    <tr>
+      <td>Status</td>
+      <td>A</td>
+      <td></td>
+      <td>A=data valid 定位 or V=data not valid 未定位</td>
+    </tr>
+    <tr>
+      <td>Latitude 纬度</td>
+      <td>2307.1256</td>
+      <td></td>
+      <td>ddmm.mmmmmm</td>
+    </tr>
+    <tr>
+      <td>N/S Indicator</td>
+      <td>N</td>
+      <td></td>
+      <td>N=north or S=south</td>
+    </tr>
+    <tr>
+      <td>Longitude 经度</td>
+      <td>12016.444</td>
+      <td></td>
+      <td>dddmm.mmmmmm</td>
+    </tr>
+    <tr>
+      <td>E/W Indicator</td>
+      <td>E</td>
+      <td></td>
+      <td>E=east or W=west</td>
+    </tr>
+    <tr>
+      <td>Speed Over Ground 速度</td>
+      <td>0.036</td>
+      <td>knots 节</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Course Over Ground 方位角</td>
+      <td>165.48</td>
+      <td>degrees 度</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>Data</td>
+      <td>260406</td>
+      <td></td>
+      <td>ddmmyy</td>
+    </tr>
+    <tr>
+      <td>Magnetic Variation 磁偏角</td>
+      <td></td>
+      <td>degrees</td>
+      <td>E=East or W=west</td>
+    </tr>
+    <tr>
+      <td>Mode</td>
+      <td>A</td>
+      <td></td>
+      <td>A=Autonomous mode  D=Differential mode  E=Estimated mode</td>
+    </tr>
+    <tr>
+      <td>Checksum</td>
+      <td>*65</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>&lt;CR&gt;&lt;LF&gt;</td>
+      <td></td>
+      <td></td>
+      <td>End of message termination</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="VTG" id="VTG"></a>
+VTG <a href="gps.html#table">top</a></p>
+
+<p>消息例子：$GPVTG,165.48,T,,M,0.036,N,0.067,K,A,*37</p>
+
+<table class="muse-table" border="2" cellpadding="5">
+  <tbody>
+    <tr>
+      <td>名字</td>
+      <td>例子</td>
+      <td>单位</td>
+      <td>描述</td>
+    </tr>
+    <tr>
+      <td>Message ID</td>
+      <td>$GPVTG</td>
+      <td></td>
+      <td>VTG protocol header</td>
+    </tr>
+    <tr>
+      <td>Course</td>
+      <td>165.48</td>
+      <td>degrees</td>
+      <td>Measured heading</td>
+    </tr>
+    <tr>
+      <td>Reference</td>
+      <td>T</td>
+      <td></td>
+      <td>TURE</td>
+    </tr>
+    <tr>
+      <td>Course</td>
+      <td></td>
+      <td>degrees</td>
+      <td>Measured heading</td>
+    </tr>
+    <tr>
+      <td>Reference</td>
+      <td>M</td>
+      <td></td>
+      <td>Magnetic</td>
+    </tr>
+    <tr>
+      <td>Speed</td>
+      <td>0.036</td>
+      <td>knots</td>
+      <td>Measured horizontal speed</td>
+    </tr>
+    <tr>
+      <td>Units</td>
+      <td>N</td>
+      <td></td>
+      <td>Knots</td>
+    </tr>
+    <tr>
+      <td>Speed</td>
+      <td>0.067</td>
+      <td>km/hr</td>
+      <td>Measured horizontal speed</td>
+    </tr>
+    <tr>
+      <td>Units</td>
+      <td>K</td>
+      <td></td>
+      <td>Kilometers per hour</td>
+    </tr>
+    <tr>
+      <td>Mode</td>
+      <td></td>
+      <td></td>
+      <td>A=Autonomous mode  D=Differential mode  E=Estimated mode</td>
+    </tr>
+    <tr>
+      <td>Checksum</td>
+      <td>*06</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>&lt;CR&gt;&lt;LF&gt;</td>
+      <td></td>
+      <td></td>
+      <td>End of message termination</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Page published by Emacs Muse ends here -->
+  </body>
+</html>

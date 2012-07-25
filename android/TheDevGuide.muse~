@@ -1,0 +1,235 @@
+#title The Developer's Guide
+
+** Android Basics
+
+一个对android的最初的定位——它是什么，它提供了什么，以及你的应用程序如何适合它
+
+*** What is Android?
+
+Android是为了移动设备的一个软件栈，包括了一个操作系统，中间件和主要应用程序。Android SDK提供了必须的工具和APIs来开始开发应用程序，在Android平台上，使用Java编程语言。
+
+**** Features
+
+ - Application framework 使能组件的resue和replacement
+
+ - Dalvik virtual machine 为移动设备优化
+
+ - Integrated browser 基于开源的WebKit引擎
+
+ - Optimized graphics 由一个定制的2D图形库支持；3D图形基于OpenGL ES 1.0 规范(硬件加速可选)
+
+ - SQLite 结构化数据存储
+
+ - Media support 支持常用的音频，视频以及图像格式(MPEG4, H.264, MP3, AAC, AMR, JPG, PNG, GIF)
+
+ - GSM Telephony (硬件依赖）
+
+ - Bluetooth, EDGE, 3G, WiFi （硬件依赖）
+
+ - Camera, GPS, compass, accelerometer （硬件依赖）
+
+ - Rich development environment 包括一个设备仿真器，调试工具，内存和性能分析，Eclipse插件
+
+**** Android Architecture
+
+下面的图展示了Android操作系统的主要组件
+
+[[system-architecture.jpg][system-achitecture]]
+
+**** Applications
+
+Android会包含一系列的核心应用程序，包括一个邮件客户端，SMS程序，日历，地图，浏览器，联系人和其他等。所有的应用程序都是用Java写成的。
+
+**** Applications Framework
+
+通过提供一个开放的开发平台，Android提供给开发者建立及其丰富和创新的应用程序的能力。开发者免费的使用硬件设备的优点，访问位置信息，运行后台服务，设置闹铃，增加状态栏的提示，等等。
+
+开发者通过使用核心应用程序具有对同样的framework APIs的完全的访问权限。应用程序结构被设计为简单的重用组件；任何应用程序都可以发布它的功能，并且任何其他的应用程序都可以使用这些功能。同样的机制允许组件被用户的代替。
+
+相关的所有应用程序是一个系统和服务的集合，包括：
+
+ - 一个丰富且可扩展的Views的集合，能够用来建立一个应用程序，包括lists,grids,text boxes,buttons, 甚至是一个嵌入式的浏览器
+
+ - Content Providers使得应用程序能够从其他应用程序来访问数据(比如联系人)或者分享他们自己的数据
+
+ - Resource Manager， 提供服务给non-code资源，比如本地化字符串，图形和布局文件
+
+ - Notification Manager使得所有的应用程序来显示在状态栏的自定义警告信息。
+
+ - Activity Manager 管理应用程序的声明周期以及提供一个常见的导航回归栈
+
+**** Libraries
+
+Android包含了一系列的C/C++库，由Android系统的各种组件使用。这些功能通过Android application framework暴露给开发者。下面列出了一些核心库。
+
+ - System C library 一个继承自BSD的标准C库实现，为嵌入式Linux设备做了调整
+
+ - Media Librarires 基于PacketVideo的OpenCORE；这个库支持回放和录制许多流行的音视频格式，比如静态图像文件，包括MPEG4, H.264, MP3, ACC, AMR, JPG和PNG
+
+ - Surface Manager 管理对显示子系统的访问以及来自于多个应用程序的2D和3D图层的无缝组合
+
+ - LibWebCore - 一个现代的web浏览器引擎，提供了Android浏览器和可嵌入的web浏览
+
+ - SGL 相关的2D图像引擎
+
+ - 3D libraries 一个基于OpenGL ES 1.0 APIs的实现；库既使用了3D硬件加速，也包括了高度优化了的3D软件光栅化
+
+ - FreeType 位图和矢量字体的渲染
+
+ - SQLite 所有应用程序都可以使用的强大的轻量级的关系数据库引擎
+
+**** Android Runtime
+
+Android包含了一系列的核心库，这些核心库提供了Java语言的核心库的大部分功能
+
+每一个Android应用程序都运行在它自己的进程里，在它自己的Dalvik virtual machine实例里。Dalvik已经被写，因此设备能够有效的运行多个VM。Dalvik VM执行文件，以Dalvik Executeable(.dex)的格式，这个格式为最小的内存占用进行了优化。VM是基于寄存器的，运行java编译器编译的类，通过dx工具转换为了.dex格式
+
+Dalvik VM依赖于Linux Kernel来实现相关的功能，比如，线程和底层内存管理
+
+**** Linux Kernel
+
+Android依赖于Linux version 2.6来提供核心服务，比如安全，内存管理，进程管理，网络栈和驱动模型。内核也扮演了一个抽象层，在硬件和软件栈之间。
+
+*** Application Fundamentals
+
+** Framework Topoics
+
+讨论了Android framework和API的特殊的部分。比如介绍了framework，以Application Fundamentals开始。然后探索了其他的主题——从设计一个用户界面和设置存储数据的资源和使用权限——如果需要的话。
+
+*** Activities
+
+Activity 是一个应用程序组件，提供了一个screen，用户可以与之交互，来做一些事情，比如拨号，照相，发送邮件，或者查看地图。每一个activity都被给予了一个window，来绘制用户界面。这个window典型的充满了整个屏幕，但是可能比screen小了一点，并且浮动在其他windows的上层。
+
+一个应用程序通常由多个activities组成，与其他的松散的绑定。典型的，一个应用程序中的activity指定为main activity，在第一次启动应用程序的时候展现给用户。每一个activity能够在此之后启动另一个activity来表现不同的动作。每当一个新的activity启动了，先前的activity就停止了，但是系统在stack中保留了这个activity。当一个新的activity启动了，它压进back stack中，并且获取用户的焦点。这个back stack遵循后进先出的机制，因此，当用户完成了当前的activity并且按下back按钮，它就从栈中弹出，恢复先前的activity。
+
+当一个activity因为一个新的activity启动而被停止，它识别了这个状态改变，通过activity的生命周期回调方法。这里有一些回调方法，activity可能接收，取决与它状态的改变，是否系统创建了它，停止了它，恢复了它或者销毁了它，并且每一个回调为你提供了机会来做一些指定的工作，适当的来改变状态。比如，当activity恢复了，你可以出哦功能新获取资源并且恢复先前被中断的动作。这些状态的交换都是activity生命周期的所有部分。
+
+文档剩下的部分讨论了如何建立和使用一个activity的基础，包括一个完整的关于activity生命周期如何工作的讨论，因此你能够适当的管理转变，在各种activity状态之间。
+
+***** Creating an Activity
+
+为了创建一个activity，你必须创建一个Activity的子类(或者它的一个存在的子类)。在你的子类中，你需要实现callback方法，这个系统调用，当activity与它的生命周期交换变量状态的时候，比如当activity被创建，停止，恢复，或者销毁。这两个最终要的回调函数是：
+
+onCreate()
+
+你必须实现这个方法。系统调用这个方法当创建你的activity的时候。在你的实现中，你应该初始化activity中的所有组件。最重要的，你在这里必须调用setContentView()来定义用户界面的布局。
+
+onPause()
+
+系统调用这个方法，当用户离开你的界面的时候。通常在这里你应该提交任何改变，因为用户可能不会回来了
+
+有一些其他的生命周期回调方法，你应该按顺序使用，来提供一个fluid user experience在activities和不期望的中断之间，会导致你的activity被停止甚至销毁掉。所有的生命周期回调函数将在稍后讨论，参考Manageing the Activity Lifecycle.
+
+*Implementing a user interface*
+
+activity的user interface由views的继承关系提供——对象继承自View类。每个view控制一个特别的矩形区域，在activity的窗口内，并且能够响应用户的交互。比如，view可能是一个button，当用户按它的时候初始化一个动作。
+
+android提供了一些ready-made views，让你能够使用来设计和组织你的布局。"Widgets“是views，提供了一个可视化元素，为screen，比如一个button, text field， checkbox或者是一个image。Layouts是views，继承自ViewGroup，提供了一个独立的布局模型，为它的子views，比如一个linear layout， 一个grid layout，或者relative layout。你也能够子类化view类和viewgroup类来创建你自己的控件和布局，并应用它们到你的activity layout中。
+
+平常的方法来定义一个布局，是使用一个XML布局文件，保存在你的应用程序resources中。这个方法，你能够维护用户界面的设计，与定义在activity的行为中的源码独立开。你可以设置布局作为UI，为你的activity使用setContentView()，传递布局的资源ID。你也可以创建一个新的Views在你的activity代码里，建立一个view继承，通过插入新的views到viewgroup中，然后使用布局，通过传递根viewgroup到setContentView()中。
+
+关于创建一个用户界面的更多信息，参考User Interface文档。
+
+*Declaring the activity in the manifest*
+
+你必须声明你自己的activity在manifest文件中，以便能被系统访问。为了声明你的activity，打开你的manifest文件，添加一个<activity>元素，作为<application>的孩子
+
+<example>
+<manifest ...>
+    <application ...>
+        <activity android:name=".ExampleActivity"/>
+        ...
+    </application ...>
+    ...
+</manifest ...>
+</example>
+
+这里有一些其他的属性，你能够在这个元素内包含，为了定义属性，比如activity的label，icon，或者主题样式等。android:name属性是唯一需要的属性——它特指了activity的类名。一旦你发布了你的应用程序，你不应该改变这个名字，因为如果你这么做了，你可能破坏一些功能，比如application shortcuts.
+
+*Using intent filters*
+
+***** Staring and Activity
+
+*Starting an activity for a result*
+
+***** Shutting Down an Activity
+
+***** Managing the Activity Lifecycle
+
+*Implementing the lifecycle callbacks*
+
+*Saving activity state*
+
+*Handling configuration changes*
+
+*Coordinating activities*
+
+**** Fragments
+
+**** Loaders
+
+**** Tasks and Back Stack
+
+*** Services
+
+**** Bound Services
+
+*** Content Providers
+
+*** Intents and Intent Filters
+
+*** Processes and Threads
+
+*** User Interface
+
+*** Application Resources
+
+*** Data Storage
+
+*** Security and Permissions
+
+*** The AndroidManifest.xml File
+
+*** Graphics
+
+*** Animation
+
+*** Renderscript
+
+*** Multimedia and Camera
+
+*** Copy and Paste
+
+*** Sensors
+
+*** Location and Maps
+
+*** App Widgets
+
+*** Bluetooth
+
+*** Near Field Communication
+
+*** Wi-Fi Direct
+
+*** USB
+
+*** Session Initiation Protocol
+
+*** Search
+
+*** Device Administration
+
+*** Testing
+
+** Google Play Topics
+
+** Develping
+
+** Publicshing
+
+** Best Parctices
+
+** Web Applications
+
+** Appendix

@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+</head>
+<body>
+    <div id="header">
+      <h1 ><lisp>
+  (concat (muse-publishing-directive "title")
+          (let ((author (muse-publishing-directive "author")))
+            (if (not (string= author (user-full-name)))
+                (concat " (by " author ")"))))</lisp></h1>
+    </div>
+<hr>

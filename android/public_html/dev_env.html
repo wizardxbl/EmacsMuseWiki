@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/default-css.css" />
+<script type="text/javascript">
+function hide_area(sDivId) {
+    var oDiv = document.getElementById(sDivId);
+    oDiv.style.display = (oDiv.style.display=="none")?"block":"none";
+}
+</script>
+</head>
+<body>
+    <div id="header">
+      <h1 >Development Enviroment</h1>
+    </div>
+<hr>
+<p><a href="index.html">&lt;Back</a></p>
+
+<p>主要开发目录
+SDK/frameworks</p>
+
+<p>在SDK下</p>
+
+<p>source build/envsetup.sh</p>
+
+<p>lunch 9</p>
+
+<p>在SDK下主要关注</p>
+
+<p>frameworks/base</p>
+
+<p>frameworks/base/serivce/java</p>
+
+<p>这两个目录</p>
+
+<p>编译命令,在SDK下</p>
+
+<p>mmm frameworks/base &mdash;&gt; 生成frameworks.jar</p>
+
+<p>mmm frameworks/base/serivce/java &mdash;&gt; 生成service.jar</p>
+
+<p>生成的文件位于 out/target/product/m801/system/framework下</p>
+
+<p>编译好之后，连接usb线</p>
+
+<p>adb remount 使得文件系统可操作</p>
+
+<p>adb push src_dir /system/framework</p>
+<hr>
+<div id="footer">
+  <div id="copyright">
+   &copy; 2012 Wizard.Yang
+  </div>
+  <div id="footdate">
+    最后更新 ： 五月  7, 2012
+  </div>
+</div>
+
+</body>
+</html>

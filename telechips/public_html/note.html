@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/default-css.css" />
+<script type="text/javascript">
+function hide_area(sDivId) {
+    var oDiv = document.getElementById(sDivId);
+    oDiv.style.display = (oDiv.style.display=="none")?"block":"none";
+}
+</script>
+</head>
+<body>
+    <div id="header">
+      <h1 >note</h1>
+    </div>
+<hr>
+<p><a href="index.html">&lt;Back</a></p>
+
+<h3>修改lk分区信息</h3>
+
+<p class="first">target/m801_evm/init.c 修改分区数组的内容</p>
+
+<p>platform/tcc_shared/include/tnftl/tnftl_v7.h<br />
+<a name="define" id="define"></a>
+NAND_MTD_PARTITION_NUM * 的定义需要修改</p>
+
+<p>这两个值要保持一致，不然运行的时候检查不过会挂起</p>
+
+
+<hr>
+<div id="footer">
+  <div id="copyright">
+   &copy; 2012 Wizard.Yang
+  </div>
+  <div id="footdate">
+    最后更新 ： 五月  7, 2012
+  </div>
+</div>
+
+</body>
+</html>

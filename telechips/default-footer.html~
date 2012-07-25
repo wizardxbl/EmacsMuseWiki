@@ -1,0 +1,11 @@
+<div id="footer">
+  <div id="copyright">
+   &copy; 2012 Wizard.Yang
+  </div>
+  <div id="footdate">
+    最后更新 ： <lisp>(muse-publishing-directive "date")</lisp>
+  </div>
+</div>
+
+</body>
+</html>

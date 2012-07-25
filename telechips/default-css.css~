@@ -1,0 +1,9 @@
+.example{
+	overflow:auto;
+	background-color:transparent;
+}
+
+#footer {
+	background-color: gray;
+	text-align: center;
+}

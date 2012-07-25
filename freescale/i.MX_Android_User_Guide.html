@@ -1,0 +1,491 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>i.MX Android User Guide</title>
+    <meta name="generator" content="muse.el">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8">
+    <style type="text/css">
+body {
+  background: white; color: black;
+  margin-left: 3%; margin-right: 7%;
+}
+
+p { margin-top: 1% }
+p.verse { margin-left: 3% }
+
+.example { margin-left: 3% }
+
+h2 {
+  margin-top: 25px;
+  margin-bottom: 0px;
+}
+h3 { margin-bottom: 0px; }
+    </style>
+  </head>
+  <body>
+    <h1>i.MX Android User Guide</h1>
+    <!-- Page published by Emacs Muse begins here -->
+<p><a href="i.MX_Android_User_Guide.html#1.">1.Preparation</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#1.1">1.1 PC Setup</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#1.2">1.2 Unpack i.MX Android Release Package</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#1.3">1.3 Run Android with Prebuilt Image</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#2.">2. Build Android for i.MX</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#2.1">2.1 Get Android Source Code (Android/Kernel/uboot)</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#2.2">2.2 Patch Code for i.MX</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#2.3">2.3 Build Uboot Images</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#2.4">2.4 Build Kernel Image</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#2.5">2.5 Build Android Image</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#2.5.1">2.5.1 User Build mode</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#3.">3. Download Images</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#3.1">3.1 System on MMC/SD/TF</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#3.1.1">3.1.1 Storage Partitions</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#3.1.2">3.1.2 Download Images with MFG Tool</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#3.1.3">3.1.3 Download Images with dd utility</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#3.2">3.2 System on NFS</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#3.2.1">3.2.1 Setup the TFTP and NFS root</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#4.">4. Bootup</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#4.1">4.1 Boot from MMC/SD/TF</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#4.2">4.2 Boot from TFTP and NFS</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#4.3">4.3 Boot Up configurations</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#4.3.1">4.3.1 U-Boot environment</a></p>
+
+<p><a href="i.MX_Android_User_Guide.html#4.3.2">4.3.2 Kernel command line (bootargs)</a></p>
+
+<hr>
+
+<p><a name="1." id="1."></a>
+1. 准备</p>
+
+<p><a name="1.1" id="1.1"></a>
+1.1 PC设置</p>
+
+<p>为了编译Android源码文件，你需要使用Linux PC。建议你使用10.10或者11.04的64位Ubuntu版本，这个版本是测试Andrdoi 4.0.3编译的经常使用的版本。</p>
+
+<p>在安装了Linux之后，你需要检查编译Android所需要的所有的包是否已经都安装好了。参考<a href="http://source.android.com/source/download.html">http://source.android.com/source/download.html</a>页面的&quot;Setting up your machine&quot;。</p>
+
+<p><a name="1.2" id="1.2"></a>
+1.2 解压i.MX Android Release Package</p>
+
+<p>在设置好了计算机之后，解压FSL i.MX Android Release Package</p>
+
+<pre class="example">
+$cd /opt (or any other directory you like)
+$tar xzvf imx-android-r13.1.tar.gz
+$cd imx-android-r13.1/code
+$tar xzvf r13.1.tar.gz
+</pre>
+
+<p><a name="1.3" id="1.3"></a>
+1.3 用预编译的镜像运行Android</p>
+
+<p>在编译任何代码之前先尝试运行Android，使用image/下的预编译的镜像，参考&quot;Download Images and Bootup&quot;.</p>
+
+<p>预编译的镜像在每个平台目录下，没有在发布包中解压：</p>
+
+<h3>Sabrelite平台:</h3>
+
+<ul>
+<li>Uboot image for SPI nor flash
+
+<ul>
+<li>bootloader: imx6q_sabrelite/u-boot-no-padding.bin or imx6q_sabrelite/u-boot.bin(with padding)</li>
+</ul></li>
+
+<li>kernel image
+
+<ul>
+<li>imx6q_sabrelite/uImage</li>
+</ul></li>
+
+<li>Adnroid system images for TF card
+
+<ul>
+<li>initramfs: imx6q_sabrelite/SD/uramdisk.img</li>
+
+<li>System root: imx6q_sabrelite/SD/system.img</li>
+
+<li>Data: imx6q_sabrelite/SD/userdata.img. Not provided as it's empty.</li>
+</ul></li>
+
+<li>Android system images for TFTP/NFS
+
+<ul>
+<li>imx6q_sabrelite/NFS/android_fs.tar.gz</li>
+</ul></li>
+</ul>
+
+
+<h3>ARM2平台</h3>
+
+<ul>
+<li>Uboot image for MMC/SD
+
+<ul>
+<li>imx6q_arm2/u-boot-no-padding.bin or imx6q_arm2/u-boot.bin(with padding)</li>
+</ul></li>
+
+<li>Kernel image
+
+<ul>
+<li>imx6q_arm2/uImage</li>
+</ul></li>
+
+<li>System images for MMC/SD
+
+<ul>
+<li>initramfs: imx6q_arm2/SD/uramdisk.img</li>
+
+<li>System root: imx6q_arm2/SD/system.img</li>
+
+<li>Data: imx6q_arm2/SD/userdata.img. Not provided as it's empty.</li>
+</ul></li>
+
+<li>System images for TFTP/NFS
+
+<ul>
+<li>imx6q_arm2/NFS/android_fs.tar.gz</li>
+</ul></li>
+</ul>
+
+<p><a name="2." id="2."></a>
+2. Build Android for i.MX</p>
+
+<p><a name="2.1" id="2.1"></a>
+2.1 获取Android源码(Android/Kernel/uboot)</p>
+
+<p>Android的源码在一个超过100个git仓库的仓库中维护的(android.googlesource.com).</p>
+
+<p>依照下面的步骤获取Android源码</p>
+
+<pre class="example">
+假设你将i.MX Android release package解压到了/opt/imx-android-r13.1/下面
+$cd ~
+$mkdir myandroid
+$curl https://dl-ssl.google.com/dl.googlesource/git-repo/repo &gt; ./repo
+$chmod a+x ./repo
+$./repo init -u https://android.googlesource.com/platform/manifest -b android-4.0.3_r1
+$cp /opt/imx-android-r13.1/code/r13.1/default.xml .repo/manifests/default.xml
+这是为了避免读取不需要的git仓库
+$./repo sync
+这个步骤可能会失败，多执行几次最终直到成功
+
+在同步完代码之后，做下面的事情
+$cd myandroid/external
+$git clone git://android.git.linaro.org/platform/external/alsa-lib.git
+$cd myandroid/hardware
+$git clone git://android.git.linaro.org/platform/hardware/alsa_sound.git
+</pre>
+
+<p>获取R13.1的内核源码</p>
+
+<pre class="example">
+$cd myandroid
+$git clone http://opensource.freescale.com/pub/scm/imx/linux-2.6-imx.git kernel_imx
+$cd kernel_imx
+$git checkout imx-android-r13.1
+</pre>
+这里的kernel的地址貌似是无效的，建议使用<a href="http://192.88.156.202/git/cgit.cgi/imx/linux-2.6-imx.git/">http://192.88.156.202/git/cgit.cgi/imx/linux-2.6-imx.git/</a> ，我是从这个地址上下下来的。
+
+<p>如果你使用uboot作为你的bootloader，那么你需要获取一份干净的源码，基于原始的git</p>
+
+<pre class="example">
+$cd myandroid/bootable/bootloader
+$git clone git://git.denx.de/u-boot.git uboot-imx
+</pre>
+
+<p><a name="2.2" id="2.2"></a>
+2.2 为i.MX打补丁</p>
+
+<p>根据下面的步骤，把所有的补丁打上</p>
+
+<pre class="example">
+Assume you had unzipped i.MX Android release package to /opt/imx-android-r13.1/.
+
+$ cd ~/myandroid
+
+$ . /opt/imx-android-r13.1/code/r13.1/and_patch.sh
+
+$ help
+
+Now you should see &quot;c_patch&quot; function is available for you
+
+$ c_patch /opt/imx-android-r13.1/code/r13.1 imx_r13.1
+
+Here &quot;/opt/imx-android-r13.1/code/r13.1&quot; is the location of the patches (i.e. directory created when you unzip release package)
+
+&quot;imx_r13.1&quot; is the branch which will be created automatically for you to hold all patches (only in those existing Google gits).
+
+You can choose any branch name you like instead of &quot;imx_r13.1&quot;.
+
+If everything is OK, &quot;c_patch&quot; will generate the following output to indicate successful patch:
+
+**************************************************************
+
+Success: Now you can build android code for FSL i.MX platform
+
+**************************************************************
+</pre>
+<h4>注意 ***</h4>
+
+<p class="first">打补丁的脚本(and_patch.sh)需要一些基本的工具，比如awk/sed。需要在电脑上安装。</p>
+
+<p><a name="2.3" id="2.3"></a>
+2.3 编译Uboot镜像</p>
+
+<pre class="example">
+$ cd ~/myandroid/bootable/bootloader/uboot-imx
+$ export ARCH=arm
+$ export CROSS_COMPILE=~/myandroid/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
+</pre>
+为了编译i.MX6Q Savrelite板子
+
+<pre class="example">
+$make distclean
+</pre>
+
+
+<h4>For sabrelite: ***</h4>
+
+<pre class="example">
+$make mx6q_sabrelite_android_config
+</pre>
+
+
+<h4>For ARM2 ***</h4>
+
+<pre class="example">
+$make mx6q_arm2_config
+</pre>
+如果没有打补丁，这些config文件都是没有的
+
+<pre class="example">
+$make
+</pre>
+
+<p>成功的编译将生成&quot;u-boot.bin&quot;文件。
+这个u-boot.bin文件在文件头的地方有1024KB的padding，这样的话，第一条可执行的指令就在1K偏移的地方
+如果你想要产生一个没有padding的镜像，你需要在主机上用dd命令</p>
+
+<pre class="example">
+$sudo dd if=./u-boot.bin of=./u-boot-no-padding.bin bs=1024 skip=1; sync
+</pre>
+通常，这个没有padding的镜像被用在SD卡上，比如，把这个没有padding的uboot镜像写入SD卡上1KB的偏移处，以至于我们不会覆盖掉MBR，MBR在SD卡的前512字节。
+
+
+<h4>注意 ***</h4>
+
+<p class="first">任何需要被uboot装载的镜像，都必须有一个独一无二的镜像头，比如，一些数据必须被添加到被装载镜像的头部，来告诉uboot，镜像的信息(比如这个镜像是内核还是ramfs等)并且，如何来装载这个镜像(比如，装载执行的地址).</p>
+
+<p>在你能够通过uboot装载任何镜像到RAM中去之前，你需要一个工具来添加这些信息，来产生一个能够被uboot识别的镜像。</p>
+
+<p>幸运的是，这个工具与uboot一起被发布了。</p>
+
+<p>在你按照上面的步骤编译好了uboot之后，你可以在tools/下面找到这个工具，叫做mkimage。</p>
+
+<p>稍后，文档将会描述如何使用mkimage来产生可以被uboot装载的镜像。</p>
+
+<p><a name="2.4" id="2.4"></a>
+2.4 编译内核镜像</p>
+
+<p>内核镜像的编译与android的根文件系统编译没什么关系，所以如果你不关心如何编译内核镜像的话，可以跳过这一节。</p>
+
+<p>为了使用NFS或者SD卡来运行Android，根据下面的步骤编译内核</p>
+
+<p>假设你已经编译了uboot。mkimage已经位于myandroid/bootable/bootloader/uboot-imx/tools/，并且加入到你的PATH中</p>
+
+<pre class="example">
+$ export PATH=~/myandroid/bootable/bootloader/uboot-imx/tools:$PATH
+$ cd ~/myandroid/kernel_imx
+$ echo $ARCH &amp;&amp; echo $CROSS_COMPILE
+</pre>
+确保你已经设置了这两个环境变量，如果没有的话则需要设置
+
+<pre class="example">
+$ export ARCH=arm
+$ export CROSS_COMPILE=~/myandroid/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
+$make imx6_android_defconfig
+</pre>
+根据arch/arm/configs下面的配置文件产生.config文件
+
+<pre class="example">
+$make uImage
+</pre>
+
+<p>如果成功的编译完成，产生的内核镜像位于 ~/myandroid/kernel_imx/arch/arm/boot/uIamge</p>
+
+
+<h4>生成能够被u-boot装载的uImage ***</h4>
+
+<p class="first">从zImage产生uIamge</p>
+
+<pre class="example">
+$ cd ~/myandroid/kernel_imx/arch/arm/boot
+$ ~/myandroid/bootable/bootloader/uboot-imx/tools/mkimage -A arm -O linux -T kernel -C none -a 0x10008000 -e 0x10008000 -n &quot;Android Linux Kernel&quot; -d ./zImage ./uImage
+</pre>
+在启动过程中，当uboot尝试读取上面的uImage时，它将会知道把它装载到0x10008000（由-a指定)来执行它。
+
+<p>-C none 表示产生uImage的时候不压缩。</p>
+
+<p>这是因为zImage已经是压缩过了的。</p>
+
+<p><a name="2.5" id="2.5"></a>
+2.5 编译Android镜像</p>
+
+<p>在打了所有的补丁之后，用下面的方法编译内核和android镜像</p>
+
+<pre class="example">
+$cd ~/myandroid
+$source build/envsetup.sh
+</pre>
+
+
+<h4>For Sabrelite platform: ***</h4>
+
+<pre class="example">
+$lunch imx6q_sabrelite-user
+</pre>
+
+
+<h4>For ARM2 platform: ***</h4>
+
+<pre class="example">
+$lunch imx6q_arm2-user
+</pre>
+
+<pre class="example">
+$make
+</pre>
+
+<p>&quot;imx6q_sabrelite/arm2&quot;是产品的名字(看 ~/myandroid/device/fsl/product)</p>
+
+<p>编译之后，检查build_*_android.log，确保没有任何编译错误。</p>
+
+<p>对于i.MX6Q sabrelite和arm2的编译，下面的输出产生在默认的myandroid/out/target/product/imx6q_sabrelite和myandroid/out/target/product/imx6q_arm2</p>
+
+<ul>
+<li>root/: 根文件系统，包括init, init.rc, 等。 挂载在/</li>
+
+<li>system/: android文件系统 二进制/库文件。 挂载在/system</li>
+
+<li>data/: android数据区域。挂载在/data</li>
+
+<li>recovery/: 安全模式的时候使用的根文件系统,不是直接使用的</li>
+
+<li>ramdisk.img: 产生自root/，不是直接使用的</li>
+
+<li>system.img: EXT4的镜像产生于system/，可以使用dd命令在SD卡上编程到SYSTEM分区</li>
+
+<li>userdata.img: EXT4镜像，产生于data/</li>
+
+<li>recovery.img： EXT4镜像，产生于recovery/。可以使用dd命令在SD卡编程到RECOVERY分区</li>
+</ul>
+
+<p><a name="2.5.1" id="2.5.1"></a>
+2.5.1 用户编译模式</p>
+
+<p>为了生产和发布，你需要把系统编译为用户模式，它有安全机制限制访问，禁止了许多调试工具。</p>
+
+<p>它将会安装用user做标记的模块。</p>
+
+<p>通过产品定义文件安装APK和工具，请检查device/fsl/imx6/imx6.mk中的PRODUCT_PACKAGES</p>
+
+<p>并且，设置ro.secure=1以及ro.debuggable=0，并且默认的adb是关闭的</p>
+
+<p>如果你需要增加自己定制的包，请添加包的MODULES_NAME或者PACKAGE_NAME到这个列表中</p>
+
+<p>把前一节中的eng改为user就能够生成用户模式的镜像了</p>
+
+<pre class="example">
+$make PRODUCT-imx6q_sabrelite-user 2&gt;&amp;1 | tee
+build_imx6q_sabrelite_android.log
+</pre>
+或者你可以
+
+<pre class="example">
+$. build/envsetup
+$lunch imx6q_sabrelite-user
+$make
+</pre>
+
+<p>更多的android编译信息请参考<a href="http://source.android.com/source/building.html">http://source.android.com/source/building.html</a></p>
+
+
+<h4>产生uboot能够装载的uramdisk ***</h4>
+
+<p class="first">下面的步骤用来产生一个能够被uboot识别出来的RAMDISK</p>
+
+<p>假设你已经编译好了uboot了。mkimage已经产生在myandroid/bootable/bootloader/uboot-imx/tools/下面</p>
+
+<pre class="example">
+$cd myandroid/out/target/product/imx6q_sabrelite
+$~/myandroid/bootable/bootloader/uboot-imx/tools/mkimage -A arm -O linux -T ramdisk -C none -a 0x10308000 -n &quot;Android Root Filesystem&quot; -d ./ramdisk.img ./uramdisk.img
+</pre>
+
+<p><a name="3." id="3."></a>
+3. Download Images</p>
+
+<p><a name="3.1" id="3.1"></a>
+3.1 System on MMC/SD/TF</p>
+
+<p><a name="3.1.1" id="3.1.1"></a>
+3.1.1 Storage Partitions</p>
+
+<p><a name="3.1.2" id="3.1.2"></a>
+3.1.2 Download Images with MFG Tool</p>
+
+<p><a name="3.1.3" id="3.1.3"></a>
+3.1.3 Download Images with dd utility</p>
+
+<p><a name="3.2" id="3.2"></a>
+3.2 System on NFS</p>
+
+<p><a name="3.2.1" id="3.2.1"></a>
+3.2.1 Setup the TFTP and NFS root</p>
+
+<p><a name="4." id="4."></a>
+4. Bootup</p>
+
+<p><a name="4.1" id="4.1"></a>
+4.1 Boot from MMC/SD/TF</p>
+
+<p><a name="4.2" id="4.2"></a>
+4.2 Boot from TFTP and NFS</p>
+
+<p><a name="4.3" id="4.3"></a>
+4.3 Boot Up configurations</p>
+
+<p><a name="4.3.1" id="4.3.1"></a>
+4.3.1 U-Boot environment</p>
+
+<p><a name="4.3.2" id="4.3.2"></a>
+4.3.2 Kernel command line (bootargs)</p>
+
+
+
+
+<!-- Page published by Emacs Muse ends here -->
+  </body>
+</html>

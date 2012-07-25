@@ -1,0 +1,29 @@
+digraph G{
+	node[shape = record];
+	
+	进程1[shape="box"];
+	进程2[shape="box"];
+	进程3[shape="box"];
+	文件对象[label="<f4>文件对象|{<f0>|<f1>|<f2>}"];
+	目录项对象[label="<f0> | <f1> 目录项对象 | <f2> | <f3> 目录项对象 | <f4> "];
+	索引节点对象[shape="box"];
+	超级块对象[shape="box"];
+	磁盘文件[shape="box"];
+	
+	进程1->文件对象:f0[label="fd"];
+	进程2->文件对象:f1[label="fd"];
+	进程3->文件对象:f2[label="fd"];
+	edge[color = red];
+	文件对象:f0->目录项对象:f1[label="目录项高速缓存 f_dentry",style=dotted];
+	文件对象:f1->目录项对象:f1[style=dotted,label="f_dentry"];
+	文件对象:f2->目录项对象:f3[style=dotted,label="f_dentry"];
+	edge[color = blue];
+	目录项对象->索引节点对象[label="d_inode"];
+	目录项对象->索引节点对象[label="d_inode"];
+	edge[color = green];
+	索引节点对象->超级块对象[label="i_sb"];
+	edge[color = blue];
+	索引节点对象->磁盘文件[label="d_inode"];
+	超级块对象->磁盘文件[label="d_inode"];
+	edge[color=black];
+}

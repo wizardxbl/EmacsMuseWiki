@@ -1,0 +1,63 @@
+digraph mtd_info{
+	node [shape=record, fontsize=12, style=filled];
+	edge[color=blue];
+	rankdir=LR;
+
+	subgraph struct_mtd_info {
+		node[shape=record style=filled];
+		color=lightgray;
+		style=filled;
+		label = "struct mtd_info";
+		edge[color="#2e3436"];
+		node_mtd_info[shape=record,label="<f0>u_char type\
+			      |<f1>uint32_t flags\
+			      |<f2>uint64_t size\
+			      |<f3>uint32_t erasesize\
+			      |<f4>uint32_t writesize\
+			      |<f4>uint32_t oobsize\
+			      |<f5>uint32_t oobavail\
+			      |<f6>unsigned int erasesize_shift\
+			      |<f7>unsigned int writesize_shift\
+			      |<f8>unsigned int erasesize_mask\
+			      |<f9>unsigned int writesize_mask\
+			      |<f10>const char *name\
+			      |<f11>int index\
+			      |<f12>struct nand_ecclayout *ecclayout\
+			      |<f13>int numeraseregions\
+			      |<f14>struct mtd_erase_region_info *eraseregions\
+			      |<f15>int (*erase)(struct mtd_info *mtd, struct erase_info *instr)\
+			      |<f16>int (*point)(struct mtd_info *mtd, loff_t from, size_t len, size_t *retlen, void **virt, resource_size_t *phys)\
+			      |<f17>void (*unpoint)(struct mtd_info *mtd, loff_t from, size_t len)\
+			      |<f18>unsigned long (*get_unmapped_area)(struct mtd_info *mtd, unsigned long len, unsigned long offset, unsigned long flags)\
+			      |<f19>struct backing_dev_info *backing_dev_info\
+			      |<f20>int (*read)(struct mtd_info *mtd, loff_t from, size_t len, size_t *retlen, u_char *buf)\
+			      |<f21>int (*write)(struct mtd_info *mtd, loff_t to, size_t len, size_t *retlen, const u_char *buf)\
+			      |<f22>int (*panic_write)(struct mtd_info *mtd, loff_t to, size_t len, size_t *retlen, const u_char *buf)\
+			      |<f23>int (*read_oob)(struct mtd_info *mtd, loff_t from, struct mtd_oob_ops *ops)\
+			      |<f24>int (*write_oob)(struct mtd_info *mtd, loff_t to, struct mtd_oob_ops *ops)\
+			      |<f25>int (*get_fact_prot_info)(struct mtd_info *mtd, struct otp_info *buf, size_t len)\
+			      |<f26>int (*read_fact_prot_reg)(struct mtd_info *mtd, loff_t from, size_t len, size_t *retlen, u_char *buf)\
+			      |<f27>int (*get_user_prot_info)(struct mtd_info *mtd, struct otp_info *buf, size_t len)\
+			      |f<28>int (*read_user_prot_reg)(struct mtd_info *mtd, loff_t from, size_t len, size_t *retlen, u_char *buf)\
+			      |f<29>int (*write_user_prot_reg)(struct mtd_info *mtd, loff_t from, size_t len, size_t *retlen, u_char *buf)\
+			      |f<30>int (*lock_user_prot_reg)(struct mtd_info *mtd, loff_t from, size_t len)\
+			      |f<31>int (*writev)(struct mtd_info *mtd, cosnt struct kvec *vecs, unsigned long count,loff_t to, size_t *retlen)\
+			      |f<32>void (*sync)(struct mtd_info *mtd)\
+			      |f<33>int (*lock)(struct mtd_info *mtd, loff_t ofs, uint64_t len)\
+			      |f<34>int (*unlock)(struct mtd_info *mtd, loff_t ofs, uint64_t len)\
+			      |f<35>int (*suspend)(struct mtd_info *mtd)\
+			      |f<36>void (*resume)(struct mtd_info *mtd)\
+			      |f<37>int (*block_isbad)(struct mtd_info *mtd, loff_t ofs)\
+			      |f<38>int (*block_markbad)(struct mtd_info *mtd, loff_t ofs)\
+			      |f<39>struct notifier_block reboot_notifier\
+			      |f<40>struct mtd_ecc_stats ecc_stats\
+			      |f<41>int subpage_sft\
+			      |f<42>void *priv\
+			      |f<43>struct module *owner\
+			      |f<44>struct device dev\
+			      |f<45>int usecount\
+			      |f<46>int (*get_device)(struct mtd_info *mtd)\
+			      |f<47>void (*put_device)(struct mtd_info *mtd)\
+			      |f<999>"];
+	}
+}
